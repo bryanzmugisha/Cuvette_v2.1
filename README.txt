@@ -62,7 +62,7 @@ The website showcases expertise in:
 Download the project files or clone the repository:
 
 ```
-git clone https://github.com/your-repo/project-name.git
+git clone https://github.com/bryanzmugisha/Cuvette_v2.1
 ```
 
 ### 2. Open in Browser

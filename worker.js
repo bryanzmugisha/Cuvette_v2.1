@@ -1,9 +1,10 @@
 export default {
   async fetch(request, env) {
     const url = new URL(request.url);
-    const path = url.pathname.replace(/\/$/, '') || '/';
+    let path = url.pathname.replace(/\/$/, '') || '/';
 
     const routes = {
+      '/':                         '/index.html',
       '/about':                    '/about.html',
       '/services':                 '/services.html',
       '/projects':                 '/projects.html',
@@ -13,7 +14,8 @@ export default {
       '/privacy-policy':           '/privacy-policy.html',
       '/terms':                    '/terms.html',
       '/cookies':                  '/cookies.html',
-      '/coming-soon':              '/coming-soon.html',
+
+      // SERVICES
       '/services/construction':    '/service-construction.html',
       '/services/fiber-telecom':   '/service-fiber.html',
       '/services/maintenance':     '/service-maintenance.html',
@@ -22,13 +24,15 @@ export default {
       '/services/consultancy':     '/service-consultancy.html',
     };
 
-    // Only rewrite — never redirect. Pass a new internal request directly.
+    // Rewrite if route exists
     if (routes[path]) {
-      const rewritten = new Request(
-        new URL(routes[path], url.origin).toString(),
-        request
-      );
-      return env.ASSETS.fetch(rewritten);
+      const rewrittenUrl = new URL(routes[path], url.origin);
+      return env.ASSETS.fetch(new Request(rewrittenUrl, request));
+    }
+
+    // OPTIONAL: fallback to index.html (SPA-like behavior)
+    if (!path.includes('.')) {
+      return env.ASSETS.fetch(new Request(new URL('/index.html', url.origin), request));
     }
 
     return env.ASSETS.fetch(request);
