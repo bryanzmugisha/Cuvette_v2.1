@@ -1,0 +1,9 @@
+User-agent: *
+Allow: /
+
+# Sitemap
+Sitemap: https://www.cuvetteengineering.com/sitemap.xml
+
+# Block irrelevant paths
+Disallow: /assets/
+Disallow: /images/favicon_io/

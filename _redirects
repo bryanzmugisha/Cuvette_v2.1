@@ -1,0 +1,21 @@
+# Cloudflare Pages — Clean URL redirects
+# These strip .html extensions so /about.html → /about
+# Cloudflare Pages also has a built-in "Pretty URLs" toggle in
+# Settings → Build & deployments → turn ON "Pretty URLs"
+# The redirects below are a belt-and-braces fallback.
+
+/about.html                  /about                  301
+/services.html               /services               301
+/projects.html               /projects               301
+/contact.html                /contact                301
+/quote.html                  /quote                  301
+/careers.html                /careers                301
+/service-construction.html   /services/construction  301
+/service-fiber.html          /services/fiber-telecom 301
+/service-maintenance.html    /services/maintenance   301
+/service-security.html       /services/security      301
+/service-electrical.html     /services/electrical    301
+/service-consultancy.html    /services/consultancy   301
+/privacy-policy.html         /privacy-policy         301
+/terms.html                  /terms                  301
+/cookies.html                /cookies                301
