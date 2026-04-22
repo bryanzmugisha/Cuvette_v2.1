@@ -127,6 +127,6 @@ This project is proprietary and intended for use by **Cuvette Engineering (U) Lt
 
 ## ✨ Author
 
-Developed and maintained by the internal team / developer.
+Developed and maintained by Brycore.
 
 ---

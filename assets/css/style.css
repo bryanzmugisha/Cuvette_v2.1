@@ -1,7 +1,5 @@
 /* ============================================================
    Cuvette Engineering (U) Ltd — style.css
-   Full rebuild: text-overflow fixed, cross-browser compatible,
-   responsive across all screen sizes and devices.
    ============================================================ */
 
 /* ---------- CSS Variables ---------- */
@@ -31,7 +29,7 @@ html {
   scroll-behavior: smooth;
   -webkit-text-size-adjust: 100%;
   text-size-adjust: 100%;
-  overflow-x: hidden; /* prevents horizontal scroll on ALL browsers */
+  overflow-x: hidden;
 }
 body {
   margin: 0;
@@ -69,8 +67,6 @@ button { font-family: inherit; cursor: pointer; }
   width: 100%;
   max-width: 1180px;
   margin: 0 auto;
-  /* 20px on all screens — consistent so every section left-edge is identical.
-     This is the single source of truth; no media queries override this. */
   padding: 0 20px;
   box-sizing: border-box;
 }
@@ -78,11 +74,7 @@ button { font-family: inherit; cursor: pointer; }
 @media (min-width: 1220px) {
   .container { max-width: 1180px; padding: 0 20px; }
 }
-/* ── MOBILE OVERFLOW GUARD ──────────────────────────────────────────
-   Every direct child of a grid/flex container gets min-width:0.
-   This is the single most effective fix for cards/text overflowing
-   their column on mobile browsers. Without this, `1fr` can grow
-   beyond its column even with minmax(0,1fr) in some edge cases. */
+/* ── MOBILE OVERFLOW GUARD ────────────────────────────────────────── */
 .card-grid > *,
 .stat-grid > *,
 .service-gallery > *,
@@ -96,7 +88,7 @@ button { font-family: inherit; cursor: pointer; }
 .form-grid > *,
 .service-details > * { min-width: 0; }
 
-/* Prevent any image from ever causing horizontal scroll */
+/* Prevent any image from causing horizontal scroll */
 img, video, iframe { max-width: 100%; height: auto; }
 
 
@@ -133,8 +125,6 @@ img, video, iframe { max-width: 100%; height: auto; }
 .logo > span { display: flex; flex-direction: column; }
 .logo small { font-size: .7rem; font-weight: 500; color: var(--muted); letter-spacing: .05em; }
 
-/* Logo mark — solid filled pill, always brand-blue with white text.
-   Self-contained: identical on white header, dark footer, and hero. */
 .logo-mark {
   width: 38px; height: 38px; min-width: 38px;
   border-radius: 11px;
@@ -206,12 +196,11 @@ img, video, iframe { max-width: 100%; height: auto; }
    ============================================================ */
 .hero {
   position: relative;
-  overflow: hidden; /* clips decorative background blobs only */
+  overflow: hidden; 
   color: #fff;
   background: linear-gradient(135deg, #020617, #0f172a 42%, #1e293b);
   min-height: 88vh;
-  /* isolation:isolate creates a stacking context WITHOUT the layout
-     side-effects of contain:layout that were making sections mis-align */
+
   isolation: isolate;
 }
 .hero-grid {
@@ -221,45 +210,33 @@ img, video, iframe { max-width: 100%; height: auto; }
   gap: 48px;
   align-items: start;
   padding: 110px 0 90px;
-  /* NO transform/will-change here — caused stacking context bugs on
-     mobile Safari that made the hero look bent / misaligned */
 }
 
 .hero h1 {
   color: #fff;
   font-size: clamp(2.2rem, 5vw, 4.2rem);
-  /* CRITICAL: explicit fixed line-height in px so the typed line
-     height calculation is pixel-perfect and never changes */
   line-height: 1.18;
   margin-bottom: 20px;
 }
 
-/* SHAKE FIX:
-   Use a fixed HEIGHT (not min-height) equal to exactly 1 line of the h1.
-   font-size * line-height = one line height. We add 4px buffer.
-   This box NEVER changes size regardless of typed string length. */
+/* SHAKE FIX:*/
 .typed-line {
   display: block;
-  /* Fixed height = exactly one line of the h1.
-     Formula: max-font-size × line-height (1.18) + small buffer.
-     4.2rem × 1.18 = 4.956rem → 5.1rem (buffer for descenders).
-     overflow:hidden clips the text INSIDE the box so nothing below shifts. */
   height: 5.1rem;
   overflow: hidden;
-  /* NO isolation/contain here — those were causing extra reflow */
+
 }
 #typed-text {
   display: inline;
   background: linear-gradient(100deg, #93c5fd, #ffffff 55%, #fca5a5);
   -webkit-background-clip: text; background-clip: text;
   -webkit-text-fill-color: transparent;
-  /* No transform/will-change — caused extra paint layers on mobile */
+  
 }
 .typed-cursor {
   color: var(--brand-red-light) !important;
   -webkit-text-fill-color: var(--brand-red-light) !important;
   font-weight: 300;
-  /* step-end = instant hard blink with zero animation overhead */
   animation: typed-blink .7s step-end infinite;
 }
 @keyframes typed-blink    { 0%,100%{opacity:1} 50%{opacity:0} }
@@ -399,16 +376,11 @@ img, video, iframe { max-width: 100%; height: auto; }
 
 /* ============================================================
    PROJECT CARDS
-   overflow:hidden is REMOVED from the card itself — it was
-   clipping text that had no padding (h3/p are direct children
-   of <article>, not inside a <div>, so the old div selector
-   never matched). Border-radius is preserved via clip on image.
    ============================================================ */
 .project-card {
   background: var(--white);
   border-radius: var(--radius);
   box-shadow: var(--shadow);
-  /* NO overflow:hidden here — it was clipping the text */
   display: flex;
   flex-direction: column;
   transition: transform .3s ease, box-shadow .3s ease;
@@ -419,13 +391,11 @@ img, video, iframe { max-width: 100%; height: auto; }
 }
 .project-card:hover { transform: translateY(-6px); box-shadow: 0 28px 72px rgba(15,23,42,.14); }
 
-/* Image gets its own overflow:hidden so rounded top corners are preserved */
 .project-card .project-img-wrap {
   overflow: hidden;
   border-radius: var(--radius) var(--radius) 0 0;
   flex-shrink: 0;
 }
-/* Fallback: if HTML has <img> directly (no wrapper), clip via a pseudo technique */
 .project-card > img:first-child {
   width: 100%;
   height: 220px;
@@ -439,7 +409,6 @@ img, video, iframe { max-width: 100%; height: auto; }
 .project-meta {
   display: flex;
   gap: 8px;
-  /* Padding: top space, sides aligned with text, no bottom */
   padding: 18px 22px 0;
   flex-wrap: wrap;
   flex-shrink: 0;
@@ -455,13 +424,11 @@ img, video, iframe { max-width: 100%; height: auto; }
   white-space: nowrap;
 }
 
-/* Text content — works whether inside a <div> OR as direct children of <article> */
 .project-card h3 {
   font-size: 1.02rem;
   margin: 10px 0 8px;
   line-height: 1.35;
   flex-shrink: 0;
-  /* padding on BOTH sides so text never touches card edge */
   padding: 0 22px;
 }
 .project-card p {
@@ -470,11 +437,9 @@ img, video, iframe { max-width: 100%; height: auto; }
   color: var(--muted);
   line-height: 1.65;
   flex: 1;
-  /* matching side padding + bottom breathing room */
   padding: 0 22px 22px;
 }
 
-/* If text IS wrapped in a <div> (some pages do this) */
 .project-card > div:not(.project-meta) {
   padding: 10px 22px 22px;
   flex: 1;
@@ -1011,7 +976,6 @@ input[type="date"], input[type="time"] { -webkit-appearance:none; }
   isolation: isolate;
 }
 
-/* Remove the old static gradient — slideshow provides the background */
 .hero::before {
   content: '';
   position: absolute; inset: 0; z-index: 2;
@@ -1467,7 +1431,6 @@ input[type="date"], input[type="time"] { -webkit-appearance:none; }
   isolation: isolate;
 }
 
-/* Remove the old static gradient — slideshow provides the background */
 .hero::before {
   content: '';
   position: absolute; inset: 0; z-index: 2;
@@ -1845,8 +1808,7 @@ input[type="date"], input[type="time"] { -webkit-appearance:none; }
 }
 
 /* ============================================================
-   MOBILE SURGICAL FIXES — April 2026
-   All fixes scoped to ≤860px. Desktop untouched.
+   MOBILE SURGICAL FIXES
    ============================================================ */
 
 /* ── FIX: service-details — force 1-col from 860px down ──── */

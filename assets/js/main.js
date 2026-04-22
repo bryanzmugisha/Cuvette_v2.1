@@ -120,11 +120,7 @@ document.addEventListener('DOMContentLoaded', () => {
   const header = document.querySelector('.site-header');
   if (header) window.addEventListener('scroll', () => header.classList.toggle('scrolled', window.scrollY > 10), { passive: true });
 
-  /* ── Formspree handler ─────────────────────────────────────────
-     Add  data-formspree  attribute to any <form> to activate.
-     Set  action="https://formspree.io/f/YOUR_FORM_ID"  on the form.
-     Get your free ID at formspree.io — 50 submissions/month free.
-     ─────────────────────────────────────────────────────────── */
+  /* ── Formspree handler ── */
   document.querySelectorAll('form[data-formspree]').forEach(form => {
     const btn      = form.querySelector('button[type="submit"]');
     const feedback = form.querySelector('.form-feedback');
