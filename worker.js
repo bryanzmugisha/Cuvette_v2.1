@@ -1,4 +1,3 @@
-/*
 export default {
   async fetch(request, env) {
     try {
@@ -38,4 +37,3 @@ export default {
     }
   }
 };
-*/
