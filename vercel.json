@@ -1,0 +1,20 @@
+{
+  "rewrites": [
+    { "source": "/service-fiber", "destination": "/service-fiber.html" },
+    { "source": "/service-construction", "destination": "/service-construction.html" },
+    { "source": "/service-consultancy", "destination": "/service-consultancy.html" },
+    { "source": "/service-electrical", "destination": "/service-electrical.html" },
+    { "source": "/service-maintenance", "destination": "/service-maintenance.html" },
+    { "source": "/service-security", "destination": "/service-security.html" },
+    { "source": "/about", "destination": "/about.html" },
+    { "source": "/contact", "destination": "/contact.html" },
+    { "source": "/services", "destination": "/services.html" },
+    { "source": "/projects", "destination": "/projects.html" },
+    { "source": "/careers", "destination": "/careers.html" },
+    { "source": "/home", "destination": "/index.html" },
+    { "source": "/quote", "destination": "/quote.html" },
+    { "source": "/cookies", "destination": "/cookies.html" },
+    { "source": "/privacy", "destination": "/privacy-policy.html" },
+    { "source": "/terms", "destination": "/terms.html" }
+  ]
+}
