@@ -1850,7 +1850,7 @@ input[type="date"], input[type="time"] { -webkit-appearance:none; }
   }
   .typed-line {
     display: block;
-    height: 2.8rem !important;  /* explicit — overrides any JS-locked height */
+    height: 2.8rem !important;
     min-height: 2.8rem;
     overflow: hidden;
     padding-bottom: 0;
