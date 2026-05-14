@@ -1,11 +1,19 @@
 {
   "cleanUrls": true,
+  "redirects": [
+    { "source": "/service-construction", "destination": "/services/construction", "permanent": true },
+    { "source": "/service-fiber",        "destination": "/services/fiber-telecom", "permanent": true },
+    { "source": "/service-maintenance",  "destination": "/services/maintenance",   "permanent": true },
+    { "source": "/service-security",     "destination": "/services/security",      "permanent": true },
+    { "source": "/service-electrical",   "destination": "/services/electrical",    "permanent": true },
+    { "source": "/service-consultancy",  "destination": "/services/consultancy",   "permanent": true }
+  ],
   "rewrites": [
     { "source": "/services/construction", "destination": "/service-construction" },
-    { "source": "/services/fiber-telecom", "destination": "/service-fiber" },
-    { "source": "/services/maintenance", "destination": "/service-maintenance" },
-    { "source": "/services/security", "destination": "/service-security" },
-    { "source": "/services/electrical", "destination": "/service-electrical" },
-    { "source": "/services/consultancy", "destination": "/service-consultancy" }
+    { "source": "/services/fiber-telecom","destination": "/service-fiber" },
+    { "source": "/services/maintenance",  "destination": "/service-maintenance" },
+    { "source": "/services/security",     "destination": "/service-security" },
+    { "source": "/services/electrical",   "destination": "/service-electrical" },
+    { "source": "/services/consultancy",  "destination": "/service-consultancy" }
   ]
 }
