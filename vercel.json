@@ -1,6 +1,7 @@
 {
   "cleanUrls": true,
   "redirects": [
+    { "source": "/index.html", "destination": "/", "permanent": true },
     { "source": "/service-construction", "destination": "/services/construction", "permanent": true },
     { "source": "/service-fiber",        "destination": "/services/fiber-telecom", "permanent": true },
     { "source": "/service-maintenance",  "destination": "/services/maintenance",   "permanent": true },
