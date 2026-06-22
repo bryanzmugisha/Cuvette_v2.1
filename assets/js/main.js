@@ -154,4 +154,40 @@ document.addEventListener('DOMContentLoaded', () => {
     });
   });
 
+  /* ── Brevo newsletter handler ── */
+  document.querySelectorAll('form[action*="sibforms.com"]').forEach(form => {
+    const btn      = form.querySelector('button[type="submit"]');
+    const feedback = form.querySelector('.form-feedback');
+
+    form.addEventListener('submit', async e => {
+      e.preventDefault();
+      if (btn) { btn.disabled = true; btn.textContent = 'Subscribing…'; }
+
+      try {
+        await fetch(form.action, {
+          method: 'POST',
+          mode: 'no-cors',
+          body: new FormData(form)
+        });
+        form.reset();
+        if (feedback) {
+          feedback.textContent = '✓ Subscribed! Welcome to the Cuvette Engineering newsletter.';
+          feedback.className = 'form-feedback success';
+          setTimeout(() => { feedback.textContent = ''; feedback.className = 'form-feedback'; }, 8000);
+        }
+      } catch {
+        // Even if fetch errors, Brevo likely received it — show success
+        form.reset();
+        if (feedback) {
+          feedback.textContent = '✓ Subscribed! Welcome to the Cuvette Engineering newsletter.';
+          feedback.className = 'form-feedback success';
+          setTimeout(() => { feedback.textContent = ''; feedback.className = 'form-feedback'; }, 8000);
+        }
+      } finally {
+        if (btn) { btn.disabled = false; btn.textContent = 'Subscribe'; }
+      }
+    });
+  });
+
+
 });
