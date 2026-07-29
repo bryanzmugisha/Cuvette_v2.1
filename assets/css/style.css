@@ -155,6 +155,20 @@ img, video, iframe { max-width: 100%; height: auto; }
 .nav a:hover { background: #f1f5f9; color: var(--text); }
 .nav a.active { color: var(--text); background: #f1f5f9; }
 
+/* ── Get a Quote — highlighted nav CTA ── */
+.nav a[href="/quote"] {
+  background: #f5a623;
+  color: #1a2e4a !important;
+  font-weight: 700;
+  border-radius: 10px;
+  padding: 8px 16px;
+}
+.nav a[href="/quote"]:hover {
+  background: #e09415;
+  color: #1a2e4a !important;
+}
+
+
 
 .nav-toggle, .menu-toggle {
   display: none;
@@ -810,6 +824,19 @@ input[type="date"], input[type="time"] { -webkit-appearance:none; }
   }
   .nav.open { display: flex; }
   .nav a { width: 100%; padding: 10px 14px; border-radius: 10px; }
+
+  /* Get a Quote button — mobile nav */
+  .nav a[href="/quote"] {
+    background: #f5a623;
+    color: #1a2e4a !important;
+    text-align: center;
+    font-weight: 700;
+    margin-top: 4px;
+  }
+  .nav a[href="/quote"]:hover {
+    background: #e09415;
+  }
+
 
   /* Legacy nav */
   .main-nav {
