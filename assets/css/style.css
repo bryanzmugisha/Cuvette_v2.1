@@ -2098,6 +2098,81 @@ input[type="date"], input[type="time"] { -webkit-appearance:none; }
   }
 }
 
+/* ===== Floating PDF Button ===== */
+.pdf-float {
+  position: fixed;
+  bottom: 100px;                 /* sits above WhatsApp */
+  right: 24px;
+  width: 56px;
+  height: 56px;
+  background: #e53935;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  box-shadow: 0 4px 14px rgba(229, 57, 53, 0.45);
+  z-index: 999;
+  text-decoration: none;
+  transition: all 0.25s ease;
+}
+
+.pdf-float:hover {
+  transform: scale(1.08);
+  background: #c62828;
+}
+
+/* Label (same style as WhatsApp) */
+.pdf-float .pdf-label {
+  position: absolute;
+  right: 70px;
+  background: #1e293b;
+  color: #fff;
+  padding: 8px 14px;
+  border-radius: 8px;
+  font-size: 13px;
+  font-weight: 500;
+  white-space: nowrap;
+  opacity: 0;
+  visibility: hidden;
+  transform: translateX(10px);
+  transition: all 0.25s ease;
+  pointer-events: none;
+  box-shadow: 0 4px 12px rgba(0,0,0,0.15);
+}
+
+/* Arrow on the label */
+.pdf-float .pdf-label::after {
+  content: "";
+  position: absolute;
+  right: -6px;
+  top: 50%;
+  transform: translateY(-50%);
+  border-width: 6px 0 6px 6px;
+  border-style: solid;
+  border-color: transparent transparent transparent #1e293b;
+}
+
+/* Show label on hover (desktop) */
+.pdf-float:hover .pdf-label {
+  opacity: 1;
+  visibility: visible;
+  transform: translateX(0);
+}
+
+/* ===== Mobile adjustments ===== */
+@media (max-width: 768px) {
+  .pdf-float {
+    width: 50px;
+    height: 50px;
+    bottom: 90px;
+    right: 18px;
+  }
+
+  .pdf-float .pdf-label {
+    display: none;               /* hide label on mobile to avoid clutter */
+  }
+}
+
 /* ── Map iframe: fix blank space on mobile ── */
 .map-wrap { height: 380px; border-radius: 16px; overflow: hidden; box-shadow: var(--shadow); }
 .map-wrap iframe { width: 100%; height: 100%; border: 0; display: block; }

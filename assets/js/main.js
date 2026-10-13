@@ -3,6 +3,7 @@
    ============================================================ */
 document.addEventListener('DOMContentLoaded', () => {
 
+
   /* ── Loader ── */
   const loader = document.querySelector('.loader');
   if (loader) setTimeout(() => loader.classList.add('hidden'), 700);
