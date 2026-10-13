@@ -253,74 +253,65 @@
       <!-- Right: photo grid -->
       <div class="team-photo-grid" data-aos="fade-left">
 
-        <div class="tpc">
+        <!-- Person 1 -->
+        <div class="tpc" 
+             data-name="Brian" 
+             data-title="Director – Executive Leadership" 
+             data-bio="Leads the overall strategy and growth of Cuvette Engineering." 
+             data-email="Ym11Z2lzaGFAY3V2ZXR0ZWVuZ2luZWVyaW5nLmNvbQ==" 
+             data-phone="KzI1NiA3MDYgMzc5IDkxNA=="
+             data-img="images/Brian.jpg">
           <div class="tpc-img">
-            <div class="tpc-placeholder"><img src="images/Brian.jpg" alt="Managing Director"></div>
-            <!-- Replace with: <img src="images/team/md.jpg" alt="Managing Director"> -->
+            <div class="tpc-placeholder"><img src="images/Brian.jpg" alt="Brian"></div>
           </div>
           <h4>Director</h4>
           <span>Executive Leadership</span>
         </div>
 
-        <div class="tpc">
+        <!-- Person 2 -->
+        <div class="tpc" 
+             data-name="Gilbert" 
+             data-title="Director – Operations & Delivery" 
+             data-bio="Oversees project execution and operational excellence across all service lines." 
+             data-email="Z2JpZ2lyd2FAY3V2ZXR0ZWVuZ2luZWVyaW5nLmNvbQ==" 
+             data-phone="KzI1NiA3MDQgMTk2IDA4OQ=="
+             data-img="images/Gilbert.jpeg">
           <div class="tpc-img">
-            <div class="tpc-placeholder"><img src="images/Gilbert.jpeg" alt="Operations Director"></div>
+            <div class="tpc-placeholder"><img src="images/Gilbert.jpeg" alt="Gilbert"></div>
           </div>
           <h4>Director</h4>
           <span>Operations &amp; Delivery</span>
         </div>
 
-        <div class="tpc">
+        <!-- Person 3 -->
+        <div class="tpc" 
+             data-name="Johnson" 
+             data-title="Director – Civil & Construction" 
+             data-bio="Specializes in civil engineering and construction project delivery." 
+             data-email="anJ3YWthcnVydUBjdXZldHRlZW5naW5lZXJpbmcuY29t" 
+             data-phone="KzI1NiA3ODQgNzc5IDkxMw=="
+             data-img="images/Johnson.jpg">
           <div class="tpc-img">
-            <div class="tpc-placeholder"><img src="images/Johnson.jpg" alt="Principle Engineer"></div>
+            <div class="tpc-placeholder"><img src="images/Johnson.jpg" alt="Johnson"></div>
           </div>
           <h4>Director</h4>
           <span>Civil &amp; Construction</span>
         </div>
 
-        <div class="tpc">
+        <!-- Person 4 -->
+        <div class="tpc" 
+             data-name="Bahati" 
+             data-title="Supervisor – Projects" 
+             data-bio="Responsible for day-to-day site supervision and quality control." 
+             data-email="YmFoYXRpaGFubmluZ0BnbWFpbC5jb20=" 
+             data-phone="KzI1NiA3NTggOTA1IDE5MA=="
+             data-img="images/Bahati.jpeg">
           <div class="tpc-img">
-            <div class="tpc-placeholder"><img src="images/Bahati.jpeg" alt="Supervisor"></div>
+            <div class="tpc-placeholder"><img src="images/Bahati.jpeg" alt="Bahati"></div>
           </div>
           <h4>Supervisor</h4>
           <span>Projects</span>
         </div>
-
-        <!--
-
-        <div class="tpc">
-          <div class="tpc-img">
-            <div class="tpc-placeholder">EE</div>
-          </div>
-          <h4>Electrical Engineer</h4>
-          <span>Electro-Mechanical Works</span>
-        </div>
-
-        <div class="tpc">
-          <div class="tpc-img">
-            <div class="tpc-placeholder">PM</div>
-          </div>
-          <h4>Project Manager</h4>
-          <span>Project Management</span>
-        </div>
-
-        <div class="tpc">
-          <div class="tpc-img">
-            <div class="tpc-placeholder">TE</div>
-          </div>
-          <h4>Telecom &amp; ICT Engineer</h4>
-          <span>Fiber &amp; Telecom</span>
-        </div>
-
-        <div class="tpc">
-          <div class="tpc-img">
-            <div class="tpc-placeholder">AC</div>
-          </div>
-          <h4>Accounts Manager</h4>
-          <span>Finance &amp; Accounts</span>
-        </div>
-
-        -->
 
       </div>
     </div>
@@ -443,6 +434,25 @@
  </div>
   </footer>
 
+  <!-- Team Member Modal -->
+<div class="team-modal" id="teamModal">
+  <div class="team-modal-content">
+    <button class="team-modal-close" aria-label="Close">&times;</button>
+    <div class="team-modal-body">
+      <img id="modalImg" src="" alt="">
+      <div class="team-modal-info">
+        <h3 id="modalName"></h3>
+        <p class="modal-title" id="modalTitle"></p>
+        <p class="modal-bio" id="modalBio"></p>
+        <div class="modal-contact">
+          <a id="modalEmail" href="#"><span>✉</span> <span id="modalEmailText"></span></a>
+          <a id="modalPhone" href="#"><span>☎</span> <span id="modalPhoneText"></span></a>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
 <!-- Floating Company Profile Button -->
 <a class="pdf-float" 
    href="/assets/Cuvette_Engineering_profile.pdf" 
@@ -482,6 +492,44 @@
     const yearSpan = document.querySelector('span[data-year]');
     if (yearSpan) {
       yearSpan.textContent = new Date().getFullYear();
+    }
+  });
+</script>
+<script>
+  /* ── Team Member Modal ── */
+  const teamModal = document.getElementById('teamModal');
+  const modalImg = document.getElementById('modalImg');
+  const modalName = document.getElementById('modalName');
+  const modalTitle = document.getElementById('modalTitle');
+  const modalBio = document.getElementById('modalBio');
+  const modalEmail = document.getElementById('modalEmail');
+  const modalEmailText = document.getElementById('modalEmailText');
+  const modalPhone = document.getElementById('modalPhone');
+  const modalPhoneText = document.getElementById('modalPhoneText');
+
+  document.querySelectorAll('.tpc').forEach(card => {
+    card.addEventListener('click', () => {
+      modalImg.src = card.dataset.img;
+      modalName.textContent = card.dataset.name;
+      modalTitle.textContent = card.dataset.title;
+      modalBio.textContent = card.dataset.bio;
+      modalEmail.href = `mailto:${card.dataset.email}`;
+      modalEmailText.textContent = card.dataset.email;
+      modalPhone.href = `tel:${card.dataset.phone}`;
+      modalPhoneText.textContent = card.dataset.phone;
+
+      teamModal.classList.add('active');
+    });
+  });
+
+  // Close modal
+  document.querySelector('.team-modal-close').addEventListener('click', () => {
+    teamModal.classList.remove('active');
+  });
+
+  teamModal.addEventListener('click', (e) => {
+    if (e.target === teamModal) {
+      teamModal.classList.remove('active');
     }
   });
 </script>
