@@ -112,9 +112,35 @@ document.addEventListener('DOMContentLoaded', () => {
   /* ── Footer year ── */
   document.querySelectorAll('[data-year]').forEach(el => { el.textContent = new Date().getFullYear(); });
 
-  /* ── Sticky header ── */
+  /* ── Smart Sticky Header (Hide down, Show up) ── */
   const header = document.querySelector('.site-header');
-  if (header) window.addEventListener('scroll', () => header.classList.toggle('scrolled', window.scrollY > 10), { passive: true });
+  
+  if (header) {
+      let lastScrollTop = 0;
+      const delta = 10; // The "glitch fix"
+
+      window.addEventListener('scroll', () => {
+          const scrollTop = window.pageYOffset || document.documentElement.scrollTop;
+
+          // 1. Keep your existing "scrolled" background change
+          header.classList.toggle('scrolled', scrollTop > 10);
+
+          // 2. THE GLITCH FIX: Ignore tiny scroll movements
+          if (Math.abs(lastScrollTop - scrollTop) <= delta) return;
+
+          // 3. Hide/Show Logic
+          if (scrollTop > lastScrollTop && scrollTop > 100) {
+              // Scrolling DOWN -> Hide the navbar
+              header.classList.add('nav-up');
+          } else {
+              // Scrolling UP -> Show the navbar
+              header.classList.remove('nav-up');
+          }
+
+          // Update the last scroll position
+          lastScrollTop = scrollTop <= 0 ? 0 : scrollTop;
+      }, { passive: true });
+  }
 
 
   /* ============================================================
