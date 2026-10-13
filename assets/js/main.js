@@ -3,7 +3,6 @@
    ============================================================ */
 document.addEventListener('DOMContentLoaded', () => {
 
-
   /* ── Loader ── */
   const loader = document.querySelector('.loader');
   if (loader) setTimeout(() => loader.classList.add('hidden'), 700);
@@ -61,9 +60,7 @@ document.addEventListener('DOMContentLoaded', () => {
   /* ── Hero image slideshow ── */
   if (window.Swiper && document.querySelector('.hero-swiper')) {
     new Swiper('.hero-swiper', {
-      loop: true,
-      speed: 1400,
-      effect: 'fade',
+      loop: true, speed: 1400, effect: 'fade',
       fadeEffect: { crossFade: true },
       autoplay: { delay: 5000, disableOnInteraction: false },
       pagination: { el: '.hero-swiper-pagination', clickable: true }
@@ -115,20 +112,31 @@ document.addEventListener('DOMContentLoaded', () => {
   /* ── Footer year ── */
   document.querySelectorAll('[data-year]').forEach(el => { el.textContent = new Date().getFullYear(); });
 
- 
-
   /* ── Sticky header ── */
   const header = document.querySelector('.site-header');
   if (header) window.addEventListener('scroll', () => header.classList.toggle('scrolled', window.scrollY > 10), { passive: true });
 
-  /* ── Formspree handler ── */
+
+  /* ============================================================
+     FORM HANDLERS & HONEYPOT PROTECTION
+     ============================================================ */
+
+  /* ── 1. Formspree handler (Contact Form) ── */
   document.querySelectorAll('form[data-formspree]').forEach(form => {
     const btn      = form.querySelector('button[type="submit"]');
     const feedback = form.querySelector('.form-feedback');
     const origLabel = btn ? btn.textContent : 'Send';
 
     form.addEventListener('submit', async e => {
-      e.preventDefault();
+      e.preventDefault(); // Stop page reload immediately
+
+      // 🛡️ HONEYPOT CHECK
+      const honeypot = form.querySelector('input[name="website_url"]')?.value;
+      if (honeypot) {
+        console.log("Spam blocked on Contact Form.");
+        return; // Silent exit. Bot thinks it worked.
+      }
+
       if (btn) { btn.disabled = true; btn.textContent = 'Sending…'; }
 
       try {
@@ -155,13 +163,64 @@ document.addEventListener('DOMContentLoaded', () => {
     });
   });
 
-  /* ── Brevo newsletter handler ── */
+  /* ── 2. FormSubmit handler (Careers Form) ── */
+  document.querySelectorAll('form[data-careers-form]').forEach(form => {
+    const btn      = form.querySelector('button[type="submit"]');
+    const feedback = form.querySelector('.form-feedback');
+    const origLabel = btn ? btn.textContent : 'Submit';
+
+    form.addEventListener('submit', async e => {
+      e.preventDefault();
+
+      // 🛡️ HONEYPOT CHECK (Checks both FormSubmit's _honey and your custom website_url)
+      const fsHoney = form.querySelector('input[name="_honey"]')?.value;
+      const customHoney = form.querySelector('input[name="website_url"]')?.value;
+      
+      if (fsHoney || customHoney) {
+        console.log("Spam blocked on Careers Form.");
+        return; // Silent exit.
+      }
+
+      if (btn) { btn.disabled = true; btn.textContent = 'Submitting…'; }
+
+      try {
+        const res = await fetch(form.action, {
+          method: 'POST',
+          body: new FormData(form) // Note: FormSubmit AJAX endpoint handles FormData natively
+        });
+        if (!res.ok) throw new Error();
+        form.reset();
+        if (feedback) {
+          feedback.textContent = form.dataset.success || '✓ Details received!';
+          feedback.className = 'form-feedback success';
+          setTimeout(() => { feedback.textContent = ''; feedback.className = 'form-feedback'; }, 7000);
+        }
+      } catch {
+        if (feedback) {
+          feedback.textContent = '✗ Could not send. Please email careers@cuvetteengineering.com directly.';
+          feedback.className = 'form-feedback error';
+        }
+      } finally {
+        if (btn) { btn.disabled = false; btn.textContent = origLabel; }
+      }
+    });
+  });
+
+  /* ── 3. Brevo newsletter handler ── */
   document.querySelectorAll('form[action*="sibforms.com"]').forEach(form => {
     const btn      = form.querySelector('button[type="submit"]');
     const feedback = form.querySelector('.form-feedback');
 
     form.addEventListener('submit', async e => {
       e.preventDefault();
+
+      // 🛡️ HONEYPOT CHECK
+      const honeypot = form.querySelector('input[name="website_url"]')?.value;
+      if (honeypot) {
+        console.log("Spam blocked on Newsletter Form.");
+        return; // Silent exit. Bot thinks it worked.
+      }
+
       if (btn) { btn.disabled = true; btn.textContent = 'Subscribing…'; }
 
       try {
@@ -177,7 +236,6 @@ document.addEventListener('DOMContentLoaded', () => {
           setTimeout(() => { feedback.textContent = ''; feedback.className = 'form-feedback'; }, 8000);
         }
       } catch {
-        // Even if fetch errors, Brevo likely received it — show success
         form.reset();
         if (feedback) {
           feedback.textContent = '✓ Subscribed! Welcome to the Cuvette Engineering newsletter.';
@@ -189,6 +247,5 @@ document.addEventListener('DOMContentLoaded', () => {
       }
     });
   });
-
 
 });
