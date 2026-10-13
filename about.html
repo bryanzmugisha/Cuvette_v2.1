@@ -513,10 +513,11 @@
       modalName.textContent = card.dataset.name;
       modalTitle.textContent = card.dataset.title;
       modalBio.textContent = card.dataset.bio;
-      modalEmail.href = `mailto:${card.dataset.email}`;
-      modalEmailText.textContent = card.dataset.email;
-      modalPhone.href = `tel:${card.dataset.phone}`;
-      modalPhoneText.textContent = card.dataset.phone;
+      modalEmailText.textContent = atob(card.dataset.email);
+      modalEmail.href = `mailto:${atob(card.dataset.email)}`;
+      modalPhoneText.textContent = atob(card.dataset.phone);
+      modalPhone.href = `tel:${atob(card.dataset.phone)}`;
+
 
       teamModal.classList.add('active');
     });
