@@ -2500,3 +2500,12 @@ input[type="date"], input[type="time"] { -webkit-appearance:none; }
     border-top: 1px solid rgba(255,255,255,.06);
   }
 }
+.pt-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:16px;align-self:center}
+.pt-logo{background:#fff;border-radius:12px;aspect-ratio:3/2;display:flex;align-items:center;justify-content:center;padding:18px;transition:transform .3s,box-shadow .3s}
+.pt-logo img{max-width:100%;max-height:100%;width:auto;height:auto;object-fit:contain}
+.pt-logo:hover{transform:translateY(-4px);box-shadow:0 10px 24px rgba(0,0,0,.35)}
+.pt-logo:hover img{filter:none;opacity:1}
+.pt-logo--dark{background:#2b2f3a;border:1px solid rgba(255,255,255,.15)}
+@media(min-width:1200px){.pt-grid{padding-right:72px}} /* clears the floating buttons */
+@media(max-width:1000px){.pt-grid{grid-template-columns:repeat(3,1fr)}}
+@media(max-width:600px){.pt-grid{grid-template-columns:repeat(2,1fr)}}
