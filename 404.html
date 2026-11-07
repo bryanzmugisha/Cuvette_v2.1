@@ -1,0 +1,448 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+  <meta name="robots" content="noindex, follow">
+  <meta name="theme-color" content="#0f1923">
+  <meta name="color-scheme" content="dark">
+  <meta name="referrer" content="strict-origin-when-cross-origin">
+  <title>Page not found | Cuvette Engineering (U) Ltd</title>
+  <meta name="description" content="The page you are looking for could not be found. Return to Cuvette Engineering (U) Ltd or explore our services.">
+  <link rel="icon" href="/favicon.ico" sizes="any">
+
+  <style>
+    :root {
+      --navy: #0f1923;
+      --gold: #e8a020;
+      --gold-hover: #f5b342;
+      --white: #ffffff;
+      --muted: #b8c1ca;
+      --subtle: #9aa6b2;
+      --line: rgba(255, 255, 255, .12);
+      --radius: 5px;
+      --ease: .2s ease;
+    }
+
+    *, *::before, *::after { box-sizing: border-box; }
+
+    html {
+      height: 100%;
+      scroll-behavior: smooth;
+      -webkit-text-size-adjust: 100%;
+    }
+
+    body {
+      min-height: 100vh;
+      min-height: 100dvh;
+      margin: 0;
+      display: flex;
+      flex-direction: column;
+      color: var(--white);
+      background:
+        radial-gradient(ellipse at 50% 38%, rgba(232, 160, 32, .10), transparent 42%),
+        var(--navy);
+      font-family: system-ui, -apple-system, "Segoe UI", Roboto, Arial, sans-serif;
+      padding-bottom: env(safe-area-inset-bottom, 0);
+    }
+
+    a { color: inherit; text-decoration: none; }
+
+    /* Visible keyboard focus everywhere */
+    :focus-visible {
+      outline: 2px solid var(--gold);
+      outline-offset: 3px;
+      border-radius: 3px;
+    }
+
+    .visually-hidden {
+      position: absolute;
+      width: 1px;
+      height: 1px;
+      overflow: hidden;
+      clip: rect(0 0 0 0);
+      white-space: nowrap;
+    }
+
+    .skip-link {
+      position: absolute;
+      left: 16px;
+      top: -60px;
+      z-index: 10;
+      padding: 10px 16px;
+      background: var(--gold);
+      color: #111820;
+      font-weight: 700;
+      font-size: 14px;
+      border-radius: var(--radius);
+      transition: top var(--ease);
+    }
+    .skip-link:focus { top: 12px; }
+
+    /* ---------- Header ---------- */
+    .site-header {
+      border-bottom: 1px solid var(--line);
+      background: rgba(15, 25, 35, .88);
+    }
+
+    .header-inner {
+      width: min(1120px, calc(100% - 40px));
+      min-height: 82px;
+      margin-inline: auto;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 24px;
+    }
+
+    .brand {
+      display: inline-flex;
+      align-items: center;
+      gap: 13px;
+      min-width: 0;
+    }
+
+    .brand img {
+      width: 54px;
+      height: 54px;
+      flex: none;
+      object-fit: contain;
+    }
+    .brand img[hidden] { display: none; }
+
+    .brand-name {
+      display: block;
+      font-size: 15px;
+      font-weight: 800;
+      letter-spacing: .09em;
+      line-height: 1.3;
+    }
+
+    .brand-subtitle {
+      display: block;
+      margin-top: 3px;
+      color: var(--gold);
+      font-size: 11px;
+      font-weight: 700;
+      letter-spacing: .2em;
+    }
+
+    .header-link {
+      color: var(--muted);
+      font-size: 13px;
+      font-weight: 700;
+      transition: color var(--ease);
+    }
+    .header-link:hover { color: var(--gold); }
+
+    /* ---------- Main ---------- */
+    main {
+      width: min(900px, calc(100% - 40px));
+      flex: 1;
+      margin-inline: auto;
+      display: grid;
+      place-items: center;
+      padding: 76px 0 86px;
+    }
+
+    .error-content { width: 100%; text-align: center; }
+
+    .error-illustration {
+      position: relative;
+      width: min(300px, 75vw);
+      height: 150px;
+      margin: 0 auto 22px;
+      display: grid;
+      place-items: center;
+    }
+
+    .error-number {
+      color: transparent;
+      font-size: clamp(100px, 20vw, 158px);
+      font-weight: 900;
+      letter-spacing: -.09em;
+      line-height: 1;
+      -webkit-text-stroke: 2px var(--gold);
+      text-shadow: 0 12px 50px rgba(232, 160, 32, .12);
+    }
+
+    .small-orbit {
+      position: absolute;
+      top: 8px;
+      right: 18px;
+      width: 18px;
+      height: 18px;
+      border-radius: 50%;
+      background: var(--gold);
+      box-shadow: 0 0 28px rgba(232, 160, 32, .65);
+    }
+
+    .eyebrow {
+      margin: 0 0 13px;
+      color: var(--gold);
+      font-size: 12px;
+      font-weight: 800;
+      letter-spacing: .22em;
+      text-transform: uppercase;
+    }
+
+    h1 {
+      margin: 0;
+      font-size: clamp(30px, 5vw, 46px);
+      line-height: 1.15;
+      letter-spacing: -.035em;
+      text-wrap: balance;
+    }
+
+    .message {
+      max-width: 590px;
+      margin: 18px auto 0;
+      color: var(--muted);
+      font-size: 16px;
+      line-height: 1.75;
+      text-wrap: pretty;
+    }
+
+    .requested-url {
+      display: inline-block;
+      max-width: 100%;
+      margin-top: 22px;
+      padding: 10px 15px;
+      overflow-wrap: anywhere;
+      border: 1px solid var(--line);
+      border-radius: 7px;
+      background: rgba(255, 255, 255, .04);
+      color: #e6e9ed;
+      font-family: ui-monospace, Consolas, Monaco, monospace;
+      font-size: 12px;
+    }
+    .requested-url[hidden] { display: none; }
+
+    .actions {
+      margin: 30px auto 0;
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: center;
+      gap: 12px;
+    }
+
+    .button {
+      min-height: 48px;
+      padding: 0 23px;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      border: 1px solid var(--gold);
+      border-radius: var(--radius);
+      background: var(--gold);
+      color: #111820;
+      font: inherit;
+      font-size: 13px;
+      font-weight: 800;
+      transition: transform var(--ease), background var(--ease),
+                  border-color var(--ease), color var(--ease);
+      cursor: pointer;
+    }
+
+    .button:hover {
+      transform: translateY(-2px);
+      background: var(--gold-hover);
+      border-color: var(--gold-hover);
+    }
+
+    .button.secondary {
+      background: transparent;
+      color: var(--white);
+      border-color: rgba(255, 255, 255, .28);
+    }
+
+    .button.secondary:hover {
+      color: var(--gold);
+      border-color: var(--gold);
+    }
+
+    .quick-links {
+      max-width: 680px;
+      margin: 56px auto 0;
+      padding-top: 27px;
+      border-top: 1px solid var(--line);
+    }
+
+    .quick-links h2 {
+      margin: 0 0 18px;
+      color: var(--muted);
+      font-size: 11px;
+      font-weight: 800;
+      letter-spacing: .18em;
+      text-transform: uppercase;
+    }
+
+    .link-list {
+      margin: 0;
+      padding: 0;
+      list-style: none;
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: center;
+      gap: 4px 12px;
+    }
+
+    .link-list a {
+      display: inline-block;
+      padding: 8px 10px; /* larger tap target */
+      font-size: 13px;
+      font-weight: 700;
+      transition: color var(--ease);
+    }
+    .link-list a:hover { color: var(--gold); }
+
+    .contact-note {
+      margin: 25px 0 0;
+      color: var(--muted);
+      font-size: 13px;
+      line-height: 1.7;
+    }
+    .contact-note a { color: var(--gold); font-weight: 700; }
+    .contact-note a:hover { text-decoration: underline; }
+
+    /* ---------- Footer ---------- */
+    footer {
+      padding: 22px 20px;
+      border-top: 1px solid var(--line);
+      color: var(--subtle);
+      text-align: center;
+      font-size: 11px;
+      letter-spacing: .08em;
+      line-height: 1.8;
+    }
+    footer strong { color: var(--gold); }
+
+    /* ---------- Responsive ---------- */
+    @media (max-width: 600px) {
+      .header-inner { width: calc(100% - 30px); min-height: 72px; }
+      .brand img { width: 46px; height: 46px; }
+      .brand-name { font-size: 12px; }
+      .header-link { font-size: 12px; }
+
+      main { width: calc(100% - 32px); padding: 55px 0 65px; }
+
+      .message { font-size: 14px; }
+      .quick-links { margin-top: 43px; }
+      .actions { width: min(100%, 330px); }
+      .button { width: 100%; }
+    }
+
+    @media (prefers-reduced-motion: reduce) {
+      *, *::before, *::after {
+        scroll-behavior: auto !important;
+        transition-duration: .01ms !important;
+      }
+      .button:hover { transform: none; }
+    }
+  </style>
+</head>
+
+<body>
+  <a class="skip-link" href="#main">Skip to content</a>
+
+  <header class="site-header">
+    <div class="header-inner">
+      <a class="brand" href="/" aria-label="Cuvette Engineering homepage">
+        <img id="brand-logo" src="/images/logo.png" width="54" height="54"
+             alt="" decoding="async">
+        <span>
+          <span class="brand-name">CUVETTE ENGINEERING</span>
+          <span class="brand-subtitle">(U) LTD</span>
+        </span>
+      </a>
+      <a class="header-link" href="/contact">Contact us <span aria-hidden="true">→</span></a>
+    </div>
+  </header>
+
+  <main id="main" tabindex="-1">
+    <section class="error-content" aria-labelledby="error-title">
+      <div class="error-illustration" aria-hidden="true">
+        <span class="error-number">404</span>
+        <span class="small-orbit"></span>
+      </div>
+
+      <p class="eyebrow">Error 404 · Page not found</p>
+      <h1 id="error-title">Looks like you've taken an unexpected turn.</h1>
+
+      <p class="message">
+        The page you're looking for may have been moved, renamed, or may no longer
+        be available. Return to our homepage or explore the services we provide.
+      </p>
+
+      <p class="requested-url" id="requested-url" hidden>
+        <span class="visually-hidden">Requested address: </span>
+        <span id="requested-path"></span>
+      </p>
+
+      <div class="actions">
+        <a class="button" href="/">Back to homepage <span aria-hidden="true">&nbsp;→</span></a>
+        <a class="button secondary" href="/services">Explore our services</a>
+        <button class="button secondary" type="button" id="go-back" hidden>Go back</button>
+      </div>
+
+      <nav class="quick-links" aria-labelledby="quick-links-title">
+        <h2 id="quick-links-title">Or explore Cuvette Engineering</h2>
+        <ul class="link-list">
+          <li><a href="/about">About us</a></li>
+          <li><a href="/services">Our services</a></li>
+          <li><a href="/projects">Our projects</a></li>
+          <li><a href="/contact">Contact</a></li>
+          <li><a href="/quote">Request a quote</a></li>
+        </ul>
+      </nav>
+
+      <p class="contact-note">
+        Need assistance? Call
+        <a href="tel:+256200940171">+256 200 940 171</a>
+        or email
+        <a href="mailto:info@cuvetteengineering.com">info@cuvetteengineering.com</a>.
+      </p>
+    </section>
+  </main>
+
+  <footer>
+    <strong>CUVETTE ENGINEERING (U) LTD</strong><br>
+    Construction · Fibre &amp; Telecoms · Engineering · Technology<br>
+    &copy; <span id="year">2026</span> Cuvette Engineering (U) Ltd. All rights reserved.
+  </footer>
+
+  <script>
+    (function () {
+      // Show the address the visitor tried to open (textContent keeps it XSS-safe).
+      var path = location.pathname + location.search;
+      var isDirectVisit = /^\/404(\.html)?\/?$/.test(location.pathname);
+      if (path && path !== "/" && !isDirectVisit) {
+        document.getElementById("requested-path").textContent =
+          path.length > 120 ? path.slice(0, 117) + "…" : path;
+        document.getElementById("requested-url").hidden = false;
+      }
+
+      // Keep the copyright year current (static fallback is in the HTML).
+      document.getElementById("year").textContent = new Date().getFullYear();
+
+      // Hide the logo if it fails to load; the text brand still works.
+      var logo = document.getElementById("brand-logo");
+      function hideLogo() { logo.hidden = true; }
+      logo.addEventListener("error", hideLogo);
+      if (logo.complete && logo.naturalWidth === 0) hideLogo();
+
+      // Only offer "Go back" when the previous page is on this site.
+      var back = document.getElementById("go-back");
+      var cameFromSite = false;
+      try {
+        cameFromSite = !!document.referrer &&
+          new URL(document.referrer).origin === location.origin;
+      } catch (e) {}
+      if (cameFromSite) {
+        back.hidden = false;
+        back.addEventListener("click", function () { history.back(); });
+      }
+    })();
+  </script>
+</body>
+</html>
