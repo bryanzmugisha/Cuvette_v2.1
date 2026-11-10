@@ -201,12 +201,7 @@
       <h3 style="margin-top:0;font-family:Manrope,sans-serif;">Send us a message</h3>
       <p style="color:var(--muted);margin-bottom:24px;font-size:.9rem;">We respond to all inquiries within 24 business hours.</p>
 
-      <form
-        action="https://formspree.io/f/xpqoglav"
-        method="POST"
-        data-formspree
-        data-success="&#10003; Message sent! We will respond within 24 business hours."
-      >
+      <form data-cv-form="contact">
         <input type="hidden" name="_subject" value="Contact Inquiry — Cuvette Engineering">
 
         <div class="form-grid">
@@ -247,6 +242,8 @@
           <input type="checkbox" name="send_copy" value="Yes, send me a copy">
           <span>Send me a copy of this message</span>
         </label>
+
+        <div class="cf-turnstile" data-sitekey="0x4AAAAAAF7oS6QfVDndfv7h" style="margin:4px 0 14px"></div>
 
         <button type="submit" class="btn btn-dark" data-label="Send Message" style="width:100%;justify-content:center;">
           Send Message
@@ -362,6 +359,8 @@
 <script src="https://cdn.jsdelivr.net/npm/aos@2.3.4/dist/aos.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/glightbox/dist/js/glightbox.min.js"></script>
 <script src="assets/js/main.js"></script>
+<script src="https://challenges.cloudflare.com/turnstile/v0/api.js" async defer></script>
+<script src="assets/js/forms.js" defer></script>
 <script>
 (function(){
   var e=[105,110,102,111,64,99,117,118,101,116,116,101,101,110,103,105,110,101,101,114,105,110,103,46,99,111,109];
