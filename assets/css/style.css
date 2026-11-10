@@ -2564,3 +2564,54 @@ input[type="date"], input[type="time"] { -webkit-appearance:none; }
   .pt-logo{height:90px;padding:10px;border-radius:10px}
   .pt-logo img{max-height:56px}
 }
+
+/* ===== About page photo collage: keep desktop look on tablet/mobile ===== */
+@media (max-width:1000px){
+  .split > *{min-width:0}
+
+  .photo-stack{
+    position:relative !important;
+    display:block !important;
+    width:100% !important;
+    max-width:560px;
+    height:0 !important;
+    padding-bottom:84% !important;   /* keeps the collage's proportions on every phone */
+    margin:12px auto 24px !important;
+    grid-template-columns:none !important;
+  }
+  .photo-stack[data-aos]{opacity:1 !important;transform:none !important}
+
+  .photo-stack img{
+    position:absolute !important;
+    display:block !important;
+    object-fit:cover;
+    box-sizing:border-box;
+    margin:0 !important;
+    max-width:none !important;
+    transform:none !important;
+    border-radius:18px;
+    box-shadow:0 14px 34px rgba(15,23,42,.22);
+  }
+
+  /* large photo, back layer */
+  .photo-stack img:nth-child(1){
+    left:0 !important; top:0 !important; right:auto !important; bottom:auto !important;
+    width:81% !important; height:75% !important;
+    border:0 !important;
+    z-index:1;
+  }
+  /* small photo, top right */
+  .photo-stack img:nth-child(2){
+    right:0 !important; top:7% !important; left:auto !important; bottom:auto !important;
+    width:44% !important; height:38% !important;
+    border:4px solid #fff !important;
+    z-index:2;
+  }
+  /* medium photo, bottom right */
+  .photo-stack img:nth-child(3){
+    left:41% !important; top:44% !important; right:auto !important; bottom:auto !important;
+    width:59% !important; height:56% !important;
+    border:4px solid #fff !important;
+    z-index:3;
+  }
+}
