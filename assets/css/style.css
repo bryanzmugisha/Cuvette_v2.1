@@ -2509,3 +2509,58 @@ input[type="date"], input[type="time"] { -webkit-appearance:none; }
 @media(min-width:1200px){.pt-grid{padding-right:72px}} /* clears the floating buttons */
 @media(max-width:1000px){.pt-grid{grid-template-columns:repeat(3,1fr)}}
 @media(max-width:600px){.pt-grid{grid-template-columns:repeat(2,1fr)}}
+
+/* ===== Clients & Partners (single source of truth) ===== */
+.team-section{overflow-x:hidden}
+.team-section .team-section-inner > *{min-width:0}
+
+.pt-grid{
+  display:grid;
+  grid-template-columns:repeat(4,minmax(0,1fr));
+  gap:16px;
+  align-self:center;
+  min-width:0;
+}
+.pt-logo{
+  background:#fff;
+  border-radius:12px;
+  height:110px;
+  padding:14px;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  overflow:hidden;
+  min-width:0;
+  box-sizing:border-box;
+}
+.pt-logo img{
+  display:block;
+  width:auto;
+  height:auto;
+  max-width:100%;
+  max-height:72px;
+  object-fit:contain;
+}
+.pt-logo--dark{background:#2b2f3a;border:1px solid rgba(255,255,255,.15)}
+
+/* desktop only: lift on hover, and keep clear of the floating buttons */
+@media (hover:hover){
+  .pt-logo{transition:transform .3s,box-shadow .3s}
+  .pt-logo:hover{transform:translateY(-4px);box-shadow:0 10px 24px rgba(0,0,0,.35)}
+}
+@media (min-width:1200px){ .pt-grid{padding-right:72px} }
+
+/* tablet: stack text above logos, 3 columns */
+@media (max-width:1000px){
+  .team-section .team-section-inner{display:grid;grid-template-columns:minmax(0,1fr);gap:32px}
+  .team-section .team-intro h2 br{display:none}
+  .pt-grid{grid-template-columns:repeat(3,minmax(0,1fr));gap:12px;align-self:stretch;width:100%;padding-right:0}
+  .team-section [data-aos]{opacity:1 !important;transform:none !important;transition:none !important}
+}
+
+/* phone: 2 columns, smaller tiles */
+@media (max-width:600px){
+  .pt-grid{grid-template-columns:repeat(2,minmax(0,1fr))}
+  .pt-logo{height:90px;padding:10px;border-radius:10px}
+  .pt-logo img{max-height:56px}
+}
