@@ -4,9 +4,7 @@ const line  = (s, n) => String(s ?? '').replace(/[\r\n]+/g, ' ').trim().slice(0,
 const block = (s, n) => String(s ?? '').trim().slice(0, n);
 const isEmail = s => /^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/.test(s);
 
-// TEMPORARY: returns a short reason so we can see why a send failed
-const fail = (res, status, reason, detail) =>
-  res.status(status).json({ ok: false, reason, detail: String(detail || '').slice(0, 200) });
+const fail = (res, status) => res.status(status).json({ ok: false });
 
 const FORMS = {
   contact: {

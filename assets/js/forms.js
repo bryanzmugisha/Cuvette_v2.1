@@ -51,7 +51,7 @@ document.addEventListener('DOMContentLoaded', () => {
         show('✓ Sent.' + (out.ref ? ' Your reference is ' + out.ref + '.' : '') +
              (out.copySent ? ' A confirmation has been emailed to you.' : ''), 'success');
       } catch (err) {
-            show('✗ Could not send. Please try again, or call +256 200 940 171.' + (why || ' [network]'), 'error');
+            show('✗ Could not send. Please try again, or call +256 200 940 171.', 'error');
       } finally {
         clearTimeout(timer);
         busy(false);
