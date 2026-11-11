@@ -4,6 +4,10 @@ const line  = (s, n) => String(s ?? '').replace(/[\r\n]+/g, ' ').trim().slice(0,
 const block = (s, n) => String(s ?? '').trim().slice(0, n);
 const isEmail = s => /^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/.test(s);
 
+// TEMPORARY: returns a short reason so we can see why a send failed
+const fail = (res, status, reason, detail) =>
+  res.status(status).json({ ok: false, reason, detail: String(detail || '').slice(0, 200) });
+
 const FORMS = {
   contact: {
     required: ['name', 'email', 'subject', 'message'],
@@ -44,23 +48,26 @@ const brevo = payload => fetch('https://api.brevo.com/v3/smtp/email', {
 });
 
 module.exports = async (req, res) => {
-    if (!process.env.BREVO_API_KEY || !process.env.TURNSTILE_SECRET) {
-    console.error('MISSING ENV VAR', {
-      brevo: Boolean(process.env.BREVO_API_KEY),
-      turnstile: Boolean(process.env.TURNSTILE_SECRET)
-    });
-    return res.status(500).json({ ok: false });
+  if (req.method !== 'POST') return res.status(405).end();
+
+  if (!process.env.BREVO_API_KEY || !process.env.TURNSTILE_SECRET) {
+    console.error('MISSING ENV VAR');
+    return fail(res, 500, 'env_missing',
+      'brevo=' + Boolean(process.env.BREVO_API_KEY) + ' turnstile=' + Boolean(process.env.TURNSTILE_SECRET));
   }
+
   const b = req.body || {};
   if (b.website_url || b._gotcha) return res.status(200).json({ ok: true }); // honeypots
 
   const cfg = FORMS[b.form_type];
-  if (!cfg) return res.status(400).json({ ok: false });
+  if (!cfg) return fail(res, 400, 'bad_form_type', b.form_type);
 
   const d = {};
   for (const f of cfg.fields) d[f.key] = f.long ? block(b[f.key], f.max) : line(b[f.key], f.max);
-  if (!isEmail(d.email) || cfg.required.some(k => !d[k]) || !b['cf-turnstile-response'])
-    return res.status(400).json({ ok: false });
+  const missing = cfg.required.filter(k => !d[k]);
+  if (missing.length) return fail(res, 400, 'missing_fields', missing.join(','));
+  if (!isEmail(d.email)) return fail(res, 400, 'bad_email');
+  if (!b['cf-turnstile-response']) return fail(res, 400, 'no_turnstile_token');
 
   // 1. Turnstile
   try {
@@ -73,18 +80,18 @@ module.exports = async (req, res) => {
         remoteip: (req.headers['x-forwarded-for'] || '').split(',')[0]
       })
     }).then(r => r.json());
-        if (!check.success) {
+    if (!check.success) {
       console.error('TURNSTILE rejected', check['error-codes']);
-      return res.status(400).json({ ok: false });
+      return fail(res, 400, 'turnstile_rejected', (check['error-codes'] || []).join(','));
     }
-    } catch (e) {
+  } catch (e) {
     console.error('TURNSTILE request error', e);
-    return res.status(502).json({ ok: false });
+    return fail(res, 502, 'turnstile_network', e.message);
   }
 
   const ref = 'CE-' + Date.now().toString(36).slice(-5).toUpperCase() +
               Math.random().toString(36).slice(2, 4).toUpperCase();
-  const wantsCopy = Boolean(b.send_copy);   // unticked checkboxes are not sent at all
+  const wantsCopy = Boolean(b.send_copy);
 
   const rows = cfg.fields.filter(f => d[f.key]).map(f =>
     `<tr><td style="padding:6px 12px;color:#667085;vertical-align:top">${esc(f.label)}</td>
@@ -101,13 +108,14 @@ module.exports = async (req, res) => {
       subject: (`[${ref}] ` + cfg.title(d)).slice(0, 150),
       htmlContent: `<p>Reference <b>${ref}</b>${wantsCopy ? ' (sender asked for a copy)' : ''}</p>${table}`
     });
-        if (!inbox.ok) {
-      console.error('BREVO enquiry failed', inbox.status, await inbox.text());
-      return res.status(502).json({ ok: false });
+    if (!inbox.ok) {
+      const t = await inbox.text();
+      console.error('BREVO enquiry failed', inbox.status, t);
+      return fail(res, 502, 'brevo_' + inbox.status, t);
     }
   } catch (e) {
     console.error('BREVO request error', e);
-    return res.status(502).json({ ok: false });
+    return fail(res, 502, 'brevo_network', e.message);
   }
 
   // 3. Automatic message to the sender (a failure here must not fail the enquiry)
@@ -128,7 +136,7 @@ module.exports = async (req, res) => {
            This is an automated message. If you did not send this request, you can ignore it.</p>
          </div>`
     });
-        copySent = ack.ok;
+    copySent = ack.ok;
     if (!ack.ok) console.error('BREVO confirmation failed', ack.status, await ack.text());
   } catch (e) { console.error('ack failed', e); }
 

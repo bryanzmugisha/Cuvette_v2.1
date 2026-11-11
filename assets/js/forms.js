@@ -31,6 +31,7 @@ document.addEventListener('DOMContentLoaded', () => {
       }
 
       busy(true);
+      let why = '';
       const ctrl  = new AbortController();
       const timer = setTimeout(() => ctrl.abort(), 20000);
       try {
@@ -41,13 +42,16 @@ document.addEventListener('DOMContentLoaded', () => {
           signal: ctrl.signal
         });
         const out = await r.json().catch(() => ({}));
-        if (!r.ok || !out.ok) throw new Error('send failed');
+        if (!r.ok || !out.ok) {
+          why = ' [' + r.status + (out.reason ? ' ' + out.reason : '') + (out.detail ? ': ' + out.detail : '') + ']';
+          throw new Error('send failed');
+        }
 
         form.reset();
         show('✓ Sent.' + (out.ref ? ' Your reference is ' + out.ref + '.' : '') +
              (out.copySent ? ' A confirmation has been emailed to you.' : ''), 'success');
       } catch (err) {
-        show('✗ Could not send. Please try again, or call +256 200 940 171.', 'error');
+            show('✗ Could not send. Please try again, or call +256 200 940 171.' + (why || ' [network]'), 'error');
       } finally {
         clearTimeout(timer);
         busy(false);
