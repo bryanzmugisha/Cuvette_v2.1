@@ -189,48 +189,40 @@ document.addEventListener('DOMContentLoaded', () => {
     });
   });
 
-    /* ── 2. FormSubmit handler (Careers Form) ── */
+     /* ── 2. FormSubmit handler (Careers Form): normal POST so the CV is attached ── */
   document.querySelectorAll('form[data-careers-form]').forEach(form => {
     const btn      = form.querySelector('button[type="submit"]');
     const feedback = form.querySelector('.form-feedback');
-    const origLabel = btn ? btn.textContent : 'Submit';
 
-    form.addEventListener('submit', async e => {
-      e.preventDefault();
-
-      // honeypots (FormSubmit's _honey and the custom website_url)
+    form.addEventListener('submit', e => {
+      // honeypots: bots exit silently
       const fsHoney     = form.querySelector('input[name="_honey"]')?.value;
       const customHoney = form.querySelector('input[name="website_url"]')?.value;
-      if (fsHoney || customHoney) return;
+      if (fsHoney || customHoney) { e.preventDefault(); return; }
 
-      if (btn) { btn.disabled = true; btn.textContent = 'Submitting…'; }
-
-      try {
-        const res = await fetch(form.action, {
-          method: 'POST',
-          body: new FormData(form),
-          headers: { Accept: 'application/json' }
-        });
-        const json = await res.json().catch(() => ({}));
-        if (!res.ok || json.success === 'false' || json.success === false) throw new Error();
-
-        form.reset();
+      // check the CV before sending
+      const file = form.querySelector('input[type="file"]')?.files[0];
+      if (file && file.size > 5 * 1024 * 1024) {
+        e.preventDefault();
         if (feedback) {
-          feedback.textContent = form.dataset.success || '✓ Details received!';
-          feedback.className = 'form-feedback success';
-          setTimeout(() => { feedback.textContent = ''; feedback.className = 'form-feedback'; }, 7000);
-        }
-      } catch {
-        if (feedback) {
-          feedback.textContent = '✗ Could not send. Please email careers@cuvetteengineering.com directly.';
+          feedback.textContent = '✗ Your CV is larger than 5MB. Please upload a smaller file.';
           feedback.className = 'form-feedback error';
         }
-      } finally {
-        if (btn) { btn.disabled = false; btn.textContent = origLabel; }
+        return;
       }
+      if (btn) { btn.disabled = true; btn.textContent = 'Submitting…'; }
+      // no preventDefault: the browser now submits the form normally
     });
   });
 
+  // confirmation message after Formsubmit sends the visitor back
+  if (new URLSearchParams(location.search).get('sent') === '1') {
+    const fb = document.querySelector('form[data-careers-form] .form-feedback');
+    if (fb) {
+      fb.textContent = '✓ Details received! We will be in touch when a matching opportunity arises.';
+      fb.className = 'form-feedback success';
+    }
+  }
   /* ── 3. Brevo newsletter handler ── */
   document.querySelectorAll('form[action*="sibforms.com"]').forEach(form => {
     const btn      = form.querySelector('button[type="submit"]');
