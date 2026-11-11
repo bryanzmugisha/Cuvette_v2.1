@@ -202,7 +202,7 @@
 
     <div class="apply-form-wrap" data-aos="fade-up">
       <form
-        action="https://formsubmit.co/ajax/careers@cuvetteengineering.com"
+        action="https://formsubmit.co/ajax/4656cde5ce81fad94b0a0ac20cfd0db5"
         method="POST"
         data-careers-form
         data-success="&#10003; Details received! We will be in touch when a matching opportunity arises."
@@ -412,44 +412,6 @@
       yearSpan.textContent = new Date().getFullYear();
     }
   });
-</script>
-<script>
-/* Careers form — Formsubmit (supports file attachments, free) */
-document.addEventListener('DOMContentLoaded', () => {
-  const form = document.querySelector('form[data-careers-form]');
-  if (!form) return;
-  const btn      = form.querySelector('button[type="submit"]');
-  const feedback = form.querySelector('.form-feedback');
-
-  form.addEventListener('submit', async e => {
-    e.preventDefault();
-    if (btn) { btn.disabled = true; btn.textContent = 'Sending…'; }
-
-    try {
-      const res = await fetch(form.action, {
-        method: 'POST',
-        body: new FormData(form),
-        headers: { 'Accept': 'application/json' }
-      });
-      const json = await res.json();
-      if (!res.ok || json.success === 'false') throw new Error();
-
-      form.reset();
-      if (feedback) {
-        feedback.textContent = form.dataset.success || '✓ Received — we will be in touch.';
-        feedback.className = 'form-feedback success';
-        setTimeout(() => { feedback.textContent = ''; feedback.className = 'form-feedback'; }, 8000);
-      }
-    } catch {
-      if (feedback) {
-        feedback.textContent = '✗ Could not send. Please email careers@cuvetteengineering.com directly.';
-        feedback.className = 'form-feedback error';
-      }
-    } finally {
-      if (btn) { btn.disabled = false; btn.textContent = 'Submit My Details'; }
-    }
-  });
-});
 </script>
 </body>
 </html>
