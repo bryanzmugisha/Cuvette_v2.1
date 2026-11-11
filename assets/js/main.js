@@ -189,7 +189,7 @@ document.addEventListener('DOMContentLoaded', () => {
     });
   });
 
-  /* ── 2. FormSubmit handler (Careers Form) ── */
+    /* ── 2. FormSubmit handler (Careers Form) ── */
   document.querySelectorAll('form[data-careers-form]').forEach(form => {
     const btn      = form.querySelector('button[type="submit"]');
     const feedback = form.querySelector('.form-feedback');
@@ -198,23 +198,22 @@ document.addEventListener('DOMContentLoaded', () => {
     form.addEventListener('submit', async e => {
       e.preventDefault();
 
-      // 🛡️ HONEYPOT CHECK (Checks both FormSubmit's _honey and your custom website_url)
-      const fsHoney = form.querySelector('input[name="_honey"]')?.value;
+      // honeypots (FormSubmit's _honey and the custom website_url)
+      const fsHoney     = form.querySelector('input[name="_honey"]')?.value;
       const customHoney = form.querySelector('input[name="website_url"]')?.value;
-      
-      if (fsHoney || customHoney) {
-        console.log("Spam blocked on Careers Form.");
-        return; // Silent exit.
-      }
+      if (fsHoney || customHoney) return;
 
       if (btn) { btn.disabled = true; btn.textContent = 'Submitting…'; }
 
       try {
         const res = await fetch(form.action, {
           method: 'POST',
-          body: new FormData(form) // Note: FormSubmit AJAX endpoint handles FormData natively
+          body: new FormData(form),
+          headers: { Accept: 'application/json' }
         });
-        if (!res.ok) throw new Error();
+        const json = await res.json().catch(() => ({}));
+        if (!res.ok || json.success === 'false' || json.success === false) throw new Error();
+
         form.reset();
         if (feedback) {
           feedback.textContent = form.dataset.success || '✓ Details received!';
