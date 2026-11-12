@@ -201,20 +201,7 @@
     </div>
 
     <div class="apply-form-wrap" data-aos="fade-up">
-      <form
-        action="https://formsubmit.co/4656cde5ce81fad94b0a0ac20cfd0db5"
-        method="POST"
-        data-careers-form
-        data-success="&#10003; Details received! We will be in touch when a matching opportunity arises."
-        enctype="multipart/form-data"
-      >
-        <input type="hidden" name="_subject" value="Career Expression of Interest — Cuvette Engineering">
-        <input type="hidden" name="_template" value="table">
-        <input type="hidden" name="_captcha" value="true">
-        <input type="hidden" name="_autoresponse" value="Thank you for registering your interest with Cuvette Engineering (U) Ltd. We have received your details and CV, and we will contact you when a matching opportunity opens. We keep submissions on file for 6 months. Cuvette Engineering (U) Ltd, Kampala | +256 200 940 171">
-        <input type="hidden" name="_next" value="https://www.cuvetteengineering.com/careers?sent=1#apply">
-
-        <input type="text" name="_honey" style="display:none">
+        <form data-cv-form="careers" data-success="&#10003; Details received! We will be in touch when a matching opportunity arises.">
 
         <div class="form-grid">
           <div class="form-group">
@@ -270,6 +257,7 @@
           <input id="cf-cv" type="file" name="cv" accept=".pdf,.doc,.docx" required style="padding:10px 0;font-size:.9rem;color:var(--muted);">
           <small style="color:var(--muted);font-size:.8rem;display:block;margin-top:4px;">Accepted: PDF, DOC, DOCX. Maximum 5MB.</small>
         </div>
+        <div class="cf-turnstile" data-sitekey="0x4AAAAAAF7oS6QfVDndfv7h" style="margin:4px 0 14px"></div>
         <button type="submit" class="btn btn-dark" data-label="Submit My Details" style="width:100%;justify-content:center;margin-top:8px;">
           Submit My Details
         </button>
@@ -396,6 +384,8 @@
 <script src="https://cdn.jsdelivr.net/npm/aos@2.3.4/dist/aos.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/glightbox/dist/js/glightbox.min.js"></script>
 <script src="assets/js/main.js"></script>
+<script src="https://challenges.cloudflare.com/turnstile/v0/api.js" async defer></script>
+<script src="assets/js/forms.js" defer></script>
 <script>
 (function(){
   var e=[105,110,102,111,64,99,117,118,101,116,116,101,101,110,103,105,110,101,101,114,105,110,103,46,99,111,109];
